@@ -1,6 +1,10 @@
 CREATE TABLE ABTEILUNG (
     ABT_ID     INT            NOT NULL PRIMARY KEY,
+<<<<<<< HEAD
     NAME       VARCHAR(255)   NOT NULL,
+=======
+    NAME       VARCHAR(200)   NOT NULL,
+>>>>>>> main
     STANDORT   VARCHAR(100)
 );
 
