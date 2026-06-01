@@ -1,0 +1,14 @@
+let
+  Source = Csv.Document(Web.Contents("https://milestonesolutions-my.sharepoint.com/personal/c_verfuerth_milestone-consult_de1/Documents/Apps/Microsoft%20Power%20Query/Uploaded%20Files/dimir_tempo_md.txt"), null, {0, 2}, ExtraValues.Ignore),
+  #"Changed column type" = Table.TransformColumnTypes(Source, {{"Column1", Int64.Type}, {"Column2", type text}}),
+  #"Added custom" = Table.TransformColumnTypes(Table.AddColumn(#"Changed column type", "Format", each "Legacy"), {{"Format", type text}}),
+  #"Reordered columns" = Table.ReorderColumns(#"Added custom", {"Format", "Column2", "Column1"}),
+  #"Added custom 1" = Table.TransformColumnTypes(Table.AddColumn(#"Reordered columns", "deck", each "Dimir_Tempo"), {{"deck", type text}}),
+  #"Reordered columns 1" = Table.ReorderColumns(#"Added custom 1", {"deck", "Format", "Column2", "Column1"}),
+  #"Added custom 2" = Table.TransformColumnTypes(Table.AddColumn(#"Reordered columns 1", "proxy", each "O"), {{"proxy", type text}}),
+  #"Reordered columns 2" = Table.ReorderColumns(#"Added custom 2", {"deck", "Format", "proxy", "Column1", "Column2"}),
+  #"Renamed columns" = Table.RenameColumns(#"Reordered columns 2", {{"Column1", "count"}, {"Column2", "card"}}),
+  #"Added custom 3" = Table.TransformColumnTypes(Table.AddColumn(#"Renamed columns", "maindeck", each "M"), {{"maindeck", type text}}),
+  #"Reordered columns 3" = Table.ReorderColumns(#"Added custom 3", {"deck", "Format", "proxy", "maindeck", "count", "card"})
+in
+  #"Reordered columns 3"
